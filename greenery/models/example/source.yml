@@ -1,22 +1,62 @@
 version: 2
 
 sources:
-
-  - name: tutorial # name of the source 
-    schema: public # this is the schema our raw data lives in
-    database: dbt # this is the name of our database
-
-    quoting:
-      database: false
-      schema: false
-      identifier: false
-
-    freshness:
-      warn_after: {count: 24, period: hour}
-      error_after: {count: 48, period: hour}
-
+  - name: raw
+    schema: public
     tables:
-      - name: superheroes 
-        loaded_at_field: created_at
-        description: >
-          Contains demographic information about each superhero
+      - name: addresses
+        columns:
+          - name: address_id
+          - name: address
+          - name: zipcode
+          - name: state
+          - name: country
+      - name: events
+        columns:
+          - name: event_id
+          - name: session_id
+          - name: user_id
+          - name: event_type
+          - name: page_url
+          - name: created_at
+      - name: order_items
+        columns:
+          - name: order_id
+          - name: product_id
+          - name: quantity
+      - name: orders
+        columns:
+          - name: order_id
+          - name: promo_id
+          - name: user_id
+          - name: address_id
+          - name: created_at
+          - name: order_cost
+          - name: shipping_cost
+          - name: order_total
+          - name: tracking_id
+          - name: shipping_service
+          - name: estimated_delivery_at
+          - name: delivered_at
+          - name: status
+      - name: products
+        columns:
+          - name: product_id
+          - name: name
+          - name: price
+          - name: quantity
+      - name: promos
+        columns:
+          - name: promo_id
+          - name: discout
+          - name: quantity
+      - name: users
+        columns:
+          - name: user_id
+          - name: first_name
+          - name: last_name
+          - name: email
+          - name: phone_number
+          - name: created_at
+          - name: updated_at
+          - name: address_id
