@@ -1,15 +1,15 @@
 with source as (
 
-    select * from {{ source('raw', 'promos') }}
+    select * from {{ source('raw_sources', 'promos') }}
 
 ),
 
 renamed as (
 
     select
-        promo_id,
-        discout as discount,
-        status
+        promo_id::varchar as promo_uuid,
+        discout::int as discount,
+        status::varchar
     from source
 
 )

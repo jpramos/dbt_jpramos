@@ -1,18 +1,18 @@
 with source as (
 
-    select * from {{ source('raw', 'events') }}
+    select * from {{ source('raw_sources', 'events') }}
 
 ),
 
 renamed as (
 
     select
-        event_id,
-        session_id,
-        user_id,
-        event_type,
-        page_url,
-        created_at
+        event_id::varchar as event_uuid,
+        session_id::varchar as session_uuid,
+        user_id::varchar as user_uuid,
+        event_type::varchar,
+        page_url::varchar,
+        created_at::timestamptz as created_at_utc
     from source
 
 )
