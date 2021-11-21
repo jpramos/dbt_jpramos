@@ -1,6 +1,6 @@
 with source as (
 
-    select * from {{ source('raw_sources', 'orders') }}
+    select * from {{ ref('orders_snapshot') }}
 
 ),
 
@@ -19,7 +19,10 @@ renamed as (
         shipping_service::varchar,
         estimated_delivery_at::timestamptz as estimated_delivery_at_utc,
         delivered_at::timestamptz as delivery_at_utc,
-        status::varchar
+        status::varchar,
+        dbt_valid_to is null as is_current_version,
+        row_number() over (partition by order_id
+                            order by dbt_valid_from) as version
     from source
 
 )

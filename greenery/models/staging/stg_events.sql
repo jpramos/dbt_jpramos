@@ -1,3 +1,6 @@
+
+{# Snapshots seems irrelevant here. #}
+
 with source as (
 
     select * from {{ source('raw_sources', 'events') }}

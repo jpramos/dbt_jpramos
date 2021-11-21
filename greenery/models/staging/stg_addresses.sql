@@ -1,3 +1,8 @@
+
+{# I would not enable an update on addresses as #}
+{# this would generate data inconsistency on older instances. #}
+{# In that case snapshots seems irrelevant. #}
+
 with source as (
 
     select * from {{ source('raw_sources', 'addresses') }}
