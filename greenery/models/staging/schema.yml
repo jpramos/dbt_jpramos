@@ -6,6 +6,9 @@ models:
     columns:
       - name: address_uuid
         description: "Address unique identifier."
+        tests:
+          - unique
+          - not_null
 
       - name: address
         description: "Composition of street number and street."
@@ -24,6 +27,9 @@ models:
     columns:
       - name: event_uuid
         description: "Event unique identifier."
+        tests:
+          - unique
+          - not_null
 
       - name: session_uuid
         description: "Session unique identifier when the event was tracked (foreign key)."
@@ -45,18 +51,28 @@ models:
     columns:
       - name: order_uuid
         description: "Order unique identifier (foreign key)."
+        tests:
+          - not_null
 
       - name: product_uuid
         description: "Product unique identifier (foreign key)."
+        tests:
+          - not_null
 
       - name: quantity
         description: "Quantity of a product in an order."
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: '>= 0'
 
   - name: stg_orders
     description: "Orders on the website."
     columns:
       - name: order_uuid
         description: "Order unique identifier."
+        tests:
+          - unique
+          - not_null
 
       - name: promo_uuid
         description: "Promo unique identifier (foreign key)."
@@ -72,12 +88,21 @@ models:
 
       - name: order_cost
         description: "Cost of the order."
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: '>= 0'
 
       - name: shipping_cost
         description: "Shipping costs."
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: '>= 0'
 
       - name: order_total
         description: "Order total."
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: '>= 0'
 
       - name: tracking_uuid
         description: "Tracking unique identifier."
@@ -93,39 +118,63 @@ models:
 
       - name: status
         description: "Status of the order."
+        tests:
+          - accepted_values:
+              values: ['shipped', 'pending', 'preparing', 'delivered']
 
   - name: stg_products
     description: "Description of the available products on the website."
     columns:
       - name: product_uuid
         description: "Product unique identifier."
+        tests:
+          - unique
+          - not_null
 
       - name: name
         description: "Name of the product."
 
       - name: price
         description: "Price of the product."
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: '>= 0'
 
       - name: quantity
         description: "Amount of product currently available on the website."
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: '>= 0'
 
   - name: stg_promos
     description: "Promotions."
     columns:
       - name: promo_uuid
         description: "Promotions unique identifier."
+        tests:
+          - unique
+          - not_null
 
       - name: discount
         description: "Percentage of discount on the promotion (%)."
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: '>= 0 and discount <= 100'
 
       - name: status
         description: "Status of the promotion."
+        tests:
+          - accepted_values:
+              values: ['active', 'inactive']
 
   - name: stg_users
     description: "Users information."
     columns:
       - name: user_uuid
         description: "User unique identifier."
+        tests:
+          - unique
+          - not_null
 
       - name: first_name
         description: "User's first name."

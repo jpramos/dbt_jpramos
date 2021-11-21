@@ -85,9 +85,6 @@ sources:
             description: "Actual date of delivery."
           - name: status
             description: "Status of the order."
-            tests:
-              - accepted_values:
-                  values: ['shipped', 'pending', 'preparing', 'delivered']
 
       - name: products
         description: "Description of the available products on the website."
@@ -110,9 +107,7 @@ sources:
             description: "Percentage of discount on the promotion (%)."
           - name: status
             description: "Status of the promotion."
-            tests:
-              - accepted_values:
-                  values: ['active', 'inactive']
+            
       - name: users
         description: "Users information."
         columns:
