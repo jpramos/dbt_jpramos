@@ -6,7 +6,7 @@
       unique_key='promo_id',
 
       strategy='check',
-      check_cols=['status'] 
+      check_cols=['status', 'discout'] 
     )
   }}
 

@@ -1,5 +1,5 @@
 {% snapshot orders_snapshot %}
-{# Keep track on the order status #}
+{# Keep track on the order status and the estimated delivery #}
   {{
     config(
       target_schema='snapshots',
