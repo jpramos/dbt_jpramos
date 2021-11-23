@@ -1,0 +1,129 @@
+version: 2
+
+sources:
+
+  - name: raw_sources # name of the source 
+    schema: public # this is the schema our raw data lives in
+    database: dbt # this is the name of our database
+
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+
+    freshness:
+      warn_after: {count: 24, period: hour}
+      error_after: {count: 48, period: hour}
+
+    tables:
+      - name: addresses
+        description: "Addresses for shipping."
+        columns:
+          - name: address_id
+            description: "Address unique identifier."
+          - name: address
+            description: "Composition of street number and street."
+          - name: zipcode
+            description: "Address's zip code."
+          - name: state
+            description: "Address's state."
+          - name: country
+            description: "Address's country."
+
+      - name: events
+        description: "Every event tracked by an user on the website."
+        columns:
+          - name: event_id
+            description: "Event unique identifier."
+          - name: session_id
+            description: "Session unique identifier when the event was tracked (foreign key)."
+          - name: user_id
+            description: "User unique identifier (foreign key)."
+          - name: event_type
+            description: "Type of event."
+          - name: page_url
+            description: "URL of the page where the event was tracked."
+          - name: created_at
+            description: "Timestamp (UTC)"
+
+      - name: order_items
+        description: "Each of an item on an order."
+        columns:
+          - name: order_id
+            description: "Order unique identifier (foreign key)."
+          - name: product_id
+            description: "Product unique identifier (foreign key)."
+          - name: quantity
+            description: "Quantity of a product in an order."
+
+      - name: orders
+        description: "Orders on the website."
+        columns:
+          - name: order_id
+            description: "Order unique identifier."
+          - name: promo_id
+            description: "Promo unique identifier (foreign key)."
+          - name: user_id
+            description: "User unique identifier (foreign key)."
+          - name: address_id
+            description: "Address unique identifier (foreign key)."
+          - name: created_at
+            description: "Date of order creation."
+          - name: order_cost
+            description: "Cost of the order."
+          - name: shipping_cost
+            description: "Shipping costs."
+          - name: order_total
+            description: "Order total."
+          - name: tracking_id
+            description: "Tracking unique identifier."
+          - name: shipping_service
+            description: "Name of the shipping service."
+          - name: estimated_delivery_at
+            description: "Estimation of the order delivery."
+          - name: delivered_at
+            description: "Actual date of delivery."
+          - name: status
+            description: "Status of the order."
+
+      - name: products
+        description: "Description of the available products on the website."
+        columns:
+          - name: product_id
+            description: "Product unique identifier."
+          - name: name
+            description: "Name of the product."
+          - name: price
+            description: "Price of the product."
+          - name: quantity
+            description: "Amount of product currently available on the website."
+
+      - name: promos
+        description: "Promotions."
+        columns:
+          - name: promo_id
+            description: "Promotions unique identifier."
+          - name: discout
+            description: "Percentage of discount on the promotion (%)."
+          - name: status
+            description: "Status of the promotion."
+            
+      - name: users
+        description: "Users information."
+        columns:
+          - name: user_id
+            description: "User unique identifier."
+          - name: first_name
+            description: "User's first name."
+          - name: last_name
+            description: "User's first name."
+          - name: email
+            description: "User's email."
+          - name: phone_number
+            description: "User's phone number."
+          - name: created_at
+            description: "Date of user's sign up on the website." 
+          - name: updated_at
+            description: "Last time the information was updated."
+          - name: address_id
+            description: "Address unique identifier (foreign key)."
