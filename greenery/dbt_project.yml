@@ -35,3 +35,7 @@ models:
   greenery:
     staging:
       +materialized: view # Leave the staging models as views until we see the necessity to change (many might become incremental at some point)
+
+on-run-end:
+# size warehouse back down after run ends
+  - "{{ apply_grants_select_usage('reporting') }}"

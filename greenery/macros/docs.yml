@@ -1,0 +1,20 @@
+version: 2
+
+macros:
+  - name: count_events
+    description: Aggregate event_types by session
+    docs:
+      show: true
+    arguments:
+      - name: event_types
+        type: List[str]
+        description: List of possible event types in a session
+
+  - name: apply_grants_select_usage
+    description: Apply grants select and usage to a specific role
+    docs:
+      show: true
+    arguments:
+      - name: role
+        type: str
+        description: Name of the role
